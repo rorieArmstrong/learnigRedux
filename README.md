@@ -1,1 +1,1 @@
-# learnigRedux
+# learningRedux
