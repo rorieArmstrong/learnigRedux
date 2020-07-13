@@ -1,9 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-import {createStore} from 'redux'; 
+import App from '../App';
+import * as serviceWorker from '../serviceWorker';
+import {createStore, combineReducers} from 'redux';
+import {Provider} from 'react-redux';
+import counterReducer from './counter'
+import loggedReducer from './isLoggedIn'
+
+const reducersAll = combineReducers({
+    counter: counterReducer, 
+    logged: loggedReducer
+})
 
 // Action Increment
 const increment = () => {
@@ -19,16 +27,9 @@ const decrement = () => {
 }
 
 // Reducer
-const counter = (state = 0, action) => {
-  switch(action.increment) {
-    case 'increment':
-      return state++;
-    case 'decrement':
-      return state--;
-  }
-}
 
-let store = createStore(counter);
+
+let store = createStore(reducersAll);
 store.subscribe(() => {console.log(store.getState())})
 
 // Dispatch
@@ -36,9 +37,9 @@ store.dispatch(increment())
 store.dispatch(increment())
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
