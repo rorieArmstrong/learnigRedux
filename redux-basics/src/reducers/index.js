@@ -5,19 +5,34 @@ import App from '../App';
 import * as serviceWorker from '../serviceWorker';
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
-import counterReducer from './reducers/counter'
-import loggedReducer from './reducers/isLoggedIn'
+import counterReducer from './counter'
+import loggedReducer from './isLoggedIn'
 
 const reducersAll = combineReducers({
     counter: counterReducer, 
     logged: loggedReducer
 })
 
+// Action Increment
+const increment = () => {
+  return {
+    type: 'increment'
+  }
+}
+
+const decrement = () => {
+  return {
+    type: 'decrement'
+  }
+}
+
+// Reducer
+
 
 let store = createStore(reducersAll);
 store.subscribe(() => {console.log(store.getState())})
 
-
+// Dispatch
 store.dispatch(increment())
 store.dispatch(increment())
 
